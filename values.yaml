@@ -1,0 +1,17 @@
+defaultNamespace: test-namespace
+model:
+  name: qwen-1-5b
+  image: vllm/vllm-openai:latest
+  command: "vllm serve Qwen/Qwen2.5-1.5B-Instruct --trust-remote-code --enable-chunked-prefill --max_num_batched_tokens 1024 --dtype=half"
+  endpointPath: qwen-inf-serv
+  pvcSize: 20Gi
+  resources:
+    limits:
+      cpu: "8"
+      memory: 16Gi
+      gpu: "1"
+    requests:
+      cpu: "2"
+      memory: 4Gi
+      gpu: "1"
+  storageClassName: openebs-hostpath

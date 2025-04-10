@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.model.name }}
+  namespace: {{ .Values.defaultNamespace }}
+  labels:
+    app: {{ .Values.model.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.model.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.model.name }}
+    spec:
+      volumes:
+        - name: cache-volume
+          persistentVolumeClaim:
+            claimName: {{ .Values.model.name }}
+        - name: shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: "2Gi"
+      containers:
+        - name: {{ .Values.model.name }}
+          image: {{ .Values.model.image }}
+          command: ["/bin/sh", "-c"]
+          args: ["{{ .Values.model.command }}"]
+          ports:
+            - containerPort: 8000
+          resources:
+            limits:
+              cpu: {{ .Values.model.resources.limits.cpu }}
+              memory: {{ .Values.model.resources.limits.memory }}
+              nvidia.com/gpu: {{ .Values.model.resources.limits.gpu }}
+            requests:
+              cpu: {{ .Values.model.resources.requests.cpu }}
+              memory: {{ .Values.model.resources.requests.memory }}
+              nvidia.com/gpu: {{ .Values.model.resources.requests.gpu }}
+          volumeMounts:
+            - mountPath: /root/.cache/huggingface
+              name: cache-volume
+            - name: shm
+              mountPath: /dev/shm
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 60
+            periodSeconds: 5

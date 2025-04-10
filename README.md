@@ -6,8 +6,12 @@ This example demonstrates how to deploy a vLLM model in kubernetes cluster.
 You would need a valid kube config and a KUBECONFIG env var set.  
 The deployment can then be initiated from this directory as follows:
 ```sh
-kubectl apply -f qwen-vllm.yaml
-kubectl apply -f auth.yaml
+kubectl apply -f examples/qwen-vllm.yaml
+```
+
+With helm:
+```sh
+helm install my-vllm . -f values.yaml
 ```
 
 ## Sending Requests

@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ .Values.model.name }}
+  namespace: {{ .Values.defaultNamespace }}
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - istio-system/istio-ingressgateway
+  http:
+    - match:
+        - uri:
+            prefix: "/{{ .Values.model.endpointPath }}/"
+      rewrite:
+        uri: "/"
+      route:
+        - destination:
+            host: "{{ .Values.model.name }}.{{ .Values.defaultNamespace }}.svc.cluster.local"
+            port:
+              number: 80

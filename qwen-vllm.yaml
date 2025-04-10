@@ -111,7 +111,9 @@ spec:
   http:
   - match:
     - uri:
-        prefix: /qwen-inf-serv  # change here to expose other route
+        prefix: /qwen-inf-serv/  # change here to expose other route
+    rewrite:
+      uri: /
     route:
     - destination:
         host: qwen-1-5b.test-namespace.svc.cluster.local  # external request will be redirected to local service

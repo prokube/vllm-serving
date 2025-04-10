@@ -119,3 +119,33 @@ spec:
         host: qwen-1-5b.test-namespace.svc.cluster.local  # external request will be redirected to local service
         port:
           number: 80
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-qwen-unauthenticated
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      app: istio-ingressgateway
+  action: ALLOW
+  rules:
+  - to:
+    - operation:
+        paths: ["/qwen-inf-serv/"]
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-qwen-inference
+  namespace: test-namespace
+spec:
+  selector:
+    matchLabels:
+      app: qwen-1-5b
+  action: ALLOW
+  rules:
+  - to:
+    - operation:
+        paths: ["/qwen-inf-serv/"]

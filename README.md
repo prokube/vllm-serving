@@ -10,9 +10,14 @@ kubectl apply -f examples/qwen-vllm.yaml
 ```
 
 With helm:
-```sh
-helm install my-vllm . -f values.yaml
-```
+1. If you want to deploy huggingface models, specify an API token first and convert it to base64:
+    ```sh
+    echo "YOUR_TOKEN" | tr -d "\n" | base64
+    ```
+2. Copy the command output and run helm:
+    ```sh
+    helm install my-vllm . -f values.yaml  --set HF_API_TOKEN="YOUR_COMMAND_OUTPUT"
+    ```
 
 ## Sending Requests
 Note: `qwen-inf-serv` endpoint is defined in VirtualService resource.

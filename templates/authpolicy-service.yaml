@@ -2,7 +2,6 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: allow-{{ .Values.model.name }}-inference
-  namespace: {{ .Values.defaultNamespace }}
 spec:
   selector:
     matchLabels:

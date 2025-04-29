@@ -11,4 +11,4 @@ spec:
   rules:
     - to:
         - operation:
-            paths: ["/{{ .Values.model.endpointPath }}/"]
+            paths: ["/vllm-serving/{{ .Values.model.endpointPath }}/"]

@@ -11,7 +11,7 @@ spec:
   http:
     - match:
         - uri:
-            prefix: "/{{ .Values.model.endpointPath }}/"
+            prefix: "/vllm-serving/{{ .Values.model.endpointPath }}/"
       rewrite:
         uri: "/"
       route:

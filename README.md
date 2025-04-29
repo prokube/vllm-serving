@@ -20,15 +20,11 @@ With helm:
     ```
 
 ## Sending Requests
-Note: `qwen-inf-serv` endpoint is defined in VirtualService resource.
+Note: `qwen-inf-serv` in the address corresponds to `endpointPath` in values.yaml. (it should correspond to endpoint defined in VirtualService resource)
 ```sh
- curl https://<your host>/qwen-inf-serv/v1/chat/completions \
+ curl https://<your host>/vllm-serving/qwen-inf-serv/v1/chat/completions \
     -H "Content-Type: application/json" \
     -d '{
-        "model": "Qwen/Qwen2.5-1.5B-Instruct",
-        "guided_choice": ["positive", "negative"],
-        "messages": [
-            {"role": "user", "content": "Classify this sentiment: vLLM is wonderful!"}
-        ]
-    }' \
-```
+          "model": "qwen-2.5-1.5b",
+          "messages": [{"role": "user", "content": "Hello!"}]
+        }'

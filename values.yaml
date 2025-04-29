@@ -1,10 +1,10 @@
 defaultNamespace: example-prokube
 HF_API_TOKEN: dummy
 model:
-  name: qwen-1-5ba
+  name: qwen-1-5b
   image: vllm/vllm-openai:latest
   command: "vllm serve Qwen/Qwen2.5-1.5B-Instruct --trust-remote-code --enable-chunked-prefill --max_num_batched_tokens 1024 --dtype=half"
-  endpointPath: qwen-inf-serva
+  endpointPath: qwen-inf-serv
   pvcSize: 20Gi
   resources:
     limits:

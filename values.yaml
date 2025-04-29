@@ -1,4 +1,4 @@
-HF_API_TOKEN: dummy
+HF_API_TOKEN: dummy  # don't edit or remove this, specify token with --set on helm chart install, if needed
 model:
   name: qwen-1-5b
   image: vllm/vllm-openai:latest

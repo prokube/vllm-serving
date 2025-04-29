@@ -5,6 +5,7 @@ model:
   command: "vllm serve Qwen/Qwen2.5-1.5B-Instruct --trust-remote-code --enable-chunked-prefill --max_num_batched_tokens 1024 --dtype=half"
   endpointPath: qwen-inf-serv
   pvcSize: 20Gi
+  replicas: 1
   resources:
     limits:
       cpu: "8"

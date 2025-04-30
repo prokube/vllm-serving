@@ -10,11 +10,16 @@ With helm:
     Namespace is required, otherwise chart is deployed in `default` namespace.
 
 ## Sending Requests
-Example request is provided below. *Note*: `qwen-inf-serv` in the address should correspond to `endpointPath` in values.yaml.
+Example request is provided below.
 ```sh
  curl https://<your host>/vllm-serving/qwen-inf-serv/v1/chat/completions \
     -H "Content-Type: application/json" \
+    -H "x-api-key: xyz" \
     -d '{
           "model": "Qwen/Qwen2.5-1.5B-Instruct",
           "messages": [{"role": "user", "content": "Hello!"}]
         }'
+
+*Notes*:
+   * `qwen-inf-serv` in the address should correspond to `endpointPath` in values.yaml
+   * "x-api-key: xyz" header is required by EnvoyFilter (see admin/envoyfilter.yaml)

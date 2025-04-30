@@ -42,16 +42,19 @@ spec:
             - mountPath: /root/.cache/huggingface
               name: cache-volume
             - name: shm
-              mountPath: /dev/shm
           livenessProbe:
             httpGet:
               path: /health
               port: 8000
             initialDelaySeconds: 60
             periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /health
               port: 8000
             initialDelaySeconds: 60
             periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 3

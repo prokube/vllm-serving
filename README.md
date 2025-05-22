@@ -19,6 +19,7 @@ Example request is provided below.
           "model": "Qwen/Qwen2.5-1.5B-Instruct",
           "messages": [{"role": "user", "content": "Hello!"}]
         }'
+```
 
 *Notes*:
    * `qwen-inf-serv` in the address should correspond to `endpointPath` in values.yaml

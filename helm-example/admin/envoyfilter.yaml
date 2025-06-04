@@ -26,7 +26,7 @@ spec:
               local path = request_handle:headers():get(":path")
               if string.find(path, "^/vllm%-serving/") then
                 local api_key = request_handle:headers():get("x-api-key")
-                if api_key ~= "xyz" then
+                if api_key ~= "91cEhCn37qnBXZES" then
                   request_handle:respond(
                     {[":status"] = "403"},
                     "Forbidden: Missing or invalid API key"

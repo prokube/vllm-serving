@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm-cpu-deployment
+  labels:
+    app: vllm-cpu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vllm-cpu
+  template:
+    metadata:
+      labels:
+        app: vllm-cpu
+    spec:
+      volumes:
+      - name: cache-volume
+        emptyDir: {}
+      - name: cache-volume
+        persistentVolumeClaim:
+          claimName: vllm-cpu-pvc
+      - name: shm
+        emptyDir:
+          medium: Memory
+          sizeLimit: "2Gi"
+      containers:
+      - name: vllm-cpu
+        image: DUMMY_IMAGE
+        ports:
+          - containerPort: 8000
+        resources:
+          requests:
+            cpu: "4"
+            memory: 8Gi
+          limits:
+            cpu: "8"
+            memory: 16Gi
+        securityContext:
+          privileged: false
+          allowPrivilegeEscalation: false
+        # env:
+        # - name: HUGGING_FACE_HUB_TOKEN
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: hf-token-secret
+        #       key: token
+        volumeMounts:
+        - mountPath: /root/.cache/huggingface
+          name: cache-volume
+        - name: shm
+          mountPath: /dev/shm
